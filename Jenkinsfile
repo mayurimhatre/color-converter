@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-               sh 'sudo npm install'
+               sh 'npm install'
                sh 'npm install forever -g'
                sh 'forever start app/server.js'
             }
