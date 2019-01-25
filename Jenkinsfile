@@ -1,29 +1,21 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:9'
+    agent { docker { image 'node:9' } }
+    environment {
+        HOME = '.'
     }
-  }
-  stages {
-    stage('Build') { 
-      steps {
-        sh 'npm install'
-        sh 'npm install forever -g'
-      }
+    stages {
+        stage('Build') {
+            steps {
+               sh 'npm install'
+               sh 'npm install forever -g'
+               sh 'forever start app/server.js'
+            }
+        }
+        stage('Test'){
+            steps {
+                sh 'npm test'
+                sh 'forever stop 0'
+            }
+        }
     }
-    stage('Test') {
-      steps {
-        sh 'forever start  -e err.log --killSignal SIGTERM --minUptime 1000 --spinSleepTime 1000 app/server.js'
-        sleep(time:30,unit:"SECONDS")
-        sh 'cat err.log'
-        sh 'npm test'
-        sh 'forever stop 0'
-      }
-    }
-    stage('Deploy') { 
-      steps {
-        sh 'echo npm package would run here...'
-      }
-    }
-  }
 }
