@@ -7,12 +7,12 @@ pipeline {
         stage('Build') {
             steps {
                sh 'npm install'
+               sh 'whoami'
                sh 'npm install forever -g'
             }
         }
         stage('Test'){
             steps {
-                sh 'whoami'
                 sh 'forever start app/server.js'
                 sh 'npm test'
                 sh 'forever stop 0'
