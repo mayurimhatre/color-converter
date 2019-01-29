@@ -7,12 +7,12 @@ pipeline {
         stage('Build') {
             steps {
                sh 'npm install'
-               sh 'npm install forever'
+               sh 'npm install forever -g'
             }
         }
         stage('Test'){
             steps {
-                sh '/usr/local/lib/node_modules/forever/bin/forever start app/server.js'
+                sh 'forever start app/server.js'
                 sh 'npm test'
                 sh 'forever stop 0'
             }
