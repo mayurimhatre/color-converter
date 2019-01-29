@@ -7,7 +7,6 @@ pipeline {
         stage('Build') {
             steps {
                sh 'npm install'
-               sh 'whoami'
                sh 'npm install forever -g'
             }
         }
