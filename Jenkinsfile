@@ -8,7 +8,6 @@ pipeline {
             steps {
                sh 'npm install'
                sh 'npm install forever'
-               sh 'forever start app/server.js'
             }
         }
         stage('Test'){
