@@ -7,7 +7,7 @@ pipeline {
         stage('Build') {
             steps {
                sh 'npm install'
-               sh 'npm install forever -g'
+               sh 'npm install forever'
                sh 'forever start app/server.js'
             }
         }
