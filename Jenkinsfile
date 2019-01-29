@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Test'){
             steps {
-                sh 'forever start app/server.js'
+                sh '/usr/local/lib/node_modules/forever/bin/forever start app/server.js'
                 sh 'npm test'
                 sh 'forever stop 0'
             }
