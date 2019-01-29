@@ -12,6 +12,7 @@ pipeline {
         }
         stage('Test'){
             steps {
+                sh 'forever start app/server.js'
                 sh 'npm test'
                 sh 'forever stop 0'
             }
