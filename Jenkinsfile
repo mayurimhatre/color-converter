@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Test'){
             steps {
-                wrap([$class: 'HailstoneBuildWrapper', location: 'host.docker.internal', port: '10010']) {
+                wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
                     sh "forever start -r agent_nodejs_linux64 app/server.js"
                     sh 'cat err.log'
                     sh 'npm test'
