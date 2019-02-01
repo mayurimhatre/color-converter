@@ -17,6 +17,7 @@ pipeline {
         }
         stage('Test'){
             steps {
+                echo sh(returnStdout: true, script: 'env')
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
                     sh "forever start -r agent_nodejs_linux64 app/server.js"
                     sh 'npm test'
