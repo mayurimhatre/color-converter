@@ -6,6 +6,7 @@ pipeline {
         }
     }
     environment {
+        CLASSPATH = '/home'
         NODE_PATH = '/home/mhama02/Documents/Hailstone/out/agent/nodejs'
     }
     stages {
