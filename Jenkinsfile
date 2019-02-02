@@ -19,7 +19,7 @@ pipeline {
             steps {
                 echo sh(returnStdout: true, script: 'env')
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
-                    sh "IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED = 'true' && forever start -r agent_nodejs_linux64 app/server.js"
+                    sh "export IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED='true' && forever start -r agent_nodejs_linux64 app/server.js"
                     sh 'npm test'
                     sh 'forever stop 0'
                 }
