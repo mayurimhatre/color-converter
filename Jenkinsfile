@@ -6,9 +6,6 @@ pipeline {
         }
     }
     environment {
-        IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED = 'true'
-        IASTAGENT_REMOTE_ENDPOINT_HTTP_LOCATION = 'localhost'
-        IASTAGENT_REMOTE_ENDPOINT_HTTP_PORT = '10010'
         NODE_PATH = '/home/mhama02/Documents/Hailstone/out/agent/nodejs'
     }
     stages {
@@ -22,7 +19,7 @@ pipeline {
             steps {
                 echo sh(returnStdout: true, script: 'env')
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
-                    sh "forever start -r agent_nodejs_linux64 app/server.js"
+                    sh "IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED = 'true' && forever start -r agent_nodejs_linux64 app/server.js"
                     sh 'npm test'
                     sh 'forever stop 0'
                 }
