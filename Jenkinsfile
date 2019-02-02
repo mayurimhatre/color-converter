@@ -6,8 +6,7 @@ pipeline {
         }
     }
     environment {
-        CLASSPATH = '/home'
-        RUN_CHANGES_DISPLAY_URL = 'dummy'
+        IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED = 'true'
         NODE_PATH = '/home/mhama02/Documents/Hailstone/out/agent/nodejs'
     }
     stages {
