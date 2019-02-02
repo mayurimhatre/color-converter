@@ -7,6 +7,7 @@ pipeline {
     }
     environment {
         CLASSPATH = '/home'
+        RUN_CHANGES_DISPLAY_URL = 'dummy'
         NODE_PATH = '/home/mhama02/Documents/Hailstone/out/agent/nodejs'
     }
     stages {
