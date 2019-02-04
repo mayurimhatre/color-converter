@@ -22,7 +22,8 @@ pipeline {
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
                     // forever doesn't even have a '-r' so the process is starting without the agent attached.
                     // sh "forever start -e err.log -r agent_nodejs_linux64 app/server.js"
-                    sh 'echo $NODE_PATH'
+                    sh 'pwd'
+                    sh 'ls -al'
                     sh "forever start -e err.log -c 'node -r agent_nodejs_linux64' app/server.js"
                     sh 'cat err.log'
                     sh 'npm test'
