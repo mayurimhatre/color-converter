@@ -37,6 +37,7 @@ pipeline {
                     sh "forever start -e err.log -c 'node -r agent_nodejs_linux64' app/server.js"
                     sh 'forever list'
                     sh 'cat err.log'
+                     sh 'forever list'
                     sh 'npm test'
                     sh 'forever stop 0'
                 }
