@@ -30,7 +30,7 @@ pipeline {
                     }
                 }
                 sh 'pwd'
-                wrap([$class: 'HailstoneBuildWrapper', location: env.localhost, port: env.10010]) {
+                wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
                     // sh "forever start -e err.log -r agent_nodejs_linux64 app/server.js"
                     // sh "forever start -e err.log -c 'NODE_PATH=${NODE_PATH} node -r agent_nodejs_linux64 app/server.js"
                     sh 'forever start -e err.log --killSignal SIGTERM --minUptime 1000 --spinSleepTime 1000 -c /bin/sh ./start.sh'
