@@ -23,6 +23,7 @@ pipeline {
                     // forever doesn't even have a '-r' so the process is starting without the agent attached.
                     // sh "forever start -e err.log -r agent_nodejs_linux64 app/server.js"
                     sh "forever start -e err.log -c 'NODE_PATH=${NODE_PATH} node -r agent_nodejs_linux64' app/server.js"
+                    sleep(time:30,unit:"SECONDS")
                     sh 'cat err.log'
                     sh 'npm test'
                     sh 'forever stop 0'
