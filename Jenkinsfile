@@ -6,7 +6,7 @@ pipeline {
         }
     }
     environment {
-        NODE_PATH = 'var/lib/jenkins/out/agent/nodejs'
+        NODE_PATH = 'var/lib/jenkins/plugins/out/agent/nodejs'
         IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED = 'true'
     }
     stages {
