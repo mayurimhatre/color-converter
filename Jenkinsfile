@@ -6,7 +6,7 @@ pipeline {
         }
     }
     environment {
-        NODE_PATH = '~/Hailstone/out/agent/nodejs'
+        NODE_PATH = '/agent/'
         IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED = 'true'
     }
     stages {
