@@ -6,10 +6,7 @@ pipeline {
         }
     }
     environment {
-        IAST_SERVER_HOST = "localhost"
-        IAST_SERVER_PORT = "10010"
-        IAST_AGENT_PATH = "/agent"
-        NODE_PATH = "${pwd}"
+        NODE_PATH = '/agent'
     }
     stages {
         stage('Build') {
@@ -33,11 +30,10 @@ pipeline {
                     }
                 }
                 sh 'pwd'
-                wrap([$class: 'HailstoneBuildWrapper', location: env.IAST_SERVER_HOST, port: env.IAST_SERVER_PORT]) {
+                wrap([$class: 'HailstoneBuildWrapper', location: env.localhost, port: env.10010]) {
                     // sh "forever start -e err.log -r agent_nodejs_linux64 app/server.js"
                     // sh "forever start -e err.log -c 'NODE_PATH=${NODE_PATH} node -r agent_nodejs_linux64 app/server.js"
-                    sh "forever start -e err.log --killSignal SIGTERM --minUptime 1000 --spinSleepTime 1000 -c /bin/sh ./start.sh ${env.IAST_SERVER_HOST} ${env.IAST_SERVER_PORT}"
-                    sleep(time:30,unit:"SECONDS")
+                    sh 'forever start -e err.log --killSignal SIGTERM --minUptime 1000 --spinSleepTime 1000 -c /bin/sh ./start.sh'
                     sh 'cat err.log'
                     sh 'npm test'
                     sh 'forever stop 0'
