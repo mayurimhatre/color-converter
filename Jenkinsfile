@@ -10,7 +10,6 @@ pipeline {
         IAST_SERVER_PORT = "10010"
         IAST_AGENT_PATH = "/agent"
         NODE_PATH = "${IAST_AGENT_PATH}"
-        NODE_PATH = '/agent'
     }
     stages {
         stage('Build') {
