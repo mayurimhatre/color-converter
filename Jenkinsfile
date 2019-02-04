@@ -17,7 +17,6 @@ pipeline {
         }
         stage('Test'){
             steps {
-                echo "Running Test stage with Agent Server: ${IAST_SERVER_HOST}:${IAST_SERVER_PORT}"
                 // echo sh(returnStdout: true, script: 'env')
                 script {
                     def agentPath = "${NODE_PATH}/agent_nodejs_linux64.node"
