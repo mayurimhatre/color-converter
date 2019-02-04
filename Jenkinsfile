@@ -18,9 +18,19 @@ pipeline {
         }
         stage('Test'){
             steps {
-                echo sh(returnStdout: true, script: 'env')
+                // echo sh(returnStdout: true, script: 'env')
+                script {
+                    def agentPath = "${NODE_PATH}/agent_nodejs_linux64.node"
+                    dir("${NODE_PATH}") {
+                        if (fileExists("agent_nodejs_linux64.node")) {
+                        echo "Using Agent: ${agentPath}"
+                        } else {
+                        echo "ERROR: Agent cannot be found at: ${agentPath}"
+                        }
+                    }
+                }
+                sh 'pwd'
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
-                    // forever doesn't even have a '-r' so the process is starting without the agent attached.
                     // sh "forever start -e err.log -r agent_nodejs_linux64 app/server.js"
                     sh "forever start -e err.log -c 'NODE_PATH=${NODE_PATH} node -r agent_nodejs_linux64' app/server.js"
                     sleep(time:30,unit:"SECONDS")
