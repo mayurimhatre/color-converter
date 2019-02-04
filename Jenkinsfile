@@ -6,8 +6,11 @@ pipeline {
         }
     }
     environment {
+        IAST_SERVER_HOST = "localhost"
+        IAST_SERVER_PORT = "10010"
+        IAST_AGENT_PATH = "/agent"
+        NODE_PATH = "${IAST_AGENT_PATH}"
         NODE_PATH = '/agent'
-        IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED = 'true'
     }
     stages {
         stage('Build') {
@@ -18,6 +21,7 @@ pipeline {
         }
         stage('Test'){
             steps {
+                echo "Running Test stage with Agent Server: ${IAST_SERVER_HOST}:${IAST_SERVER_PORT}"
                 // echo sh(returnStdout: true, script: 'env')
                 script {
                     def agentPath = "${NODE_PATH}/agent_nodejs_linux64.node"
@@ -30,9 +34,10 @@ pipeline {
                     }
                 }
                 sh 'pwd'
-                wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
+                wrap([$class: 'HailstoneBuildWrapper', location: env.IAST_SERVER_HOST, port: env.IAST_SERVER_PORT]) {
                     // sh "forever start -e err.log -r agent_nodejs_linux64 app/server.js"
-                    sh "forever start -r agent_nodejs_linux64 app/server.js"
+                    // sh "forever start -e err.log -c 'NODE_PATH=${NODE_PATH} node -r agent_nodejs_linux64 app/server.js"
+                    sh "forever start -e err.log --killSignal SIGTERM --minUptime 1000 --spinSleepTime 1000 -c /bin/sh ./start.sh ${env.IAST_SERVER_HOST} ${env.IAST_SERVER_PORT}"
                     sleep(time:30,unit:"SECONDS")
                     sh 'cat err.log'
                     sh 'npm test'

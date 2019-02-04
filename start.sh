@@ -17,17 +17,12 @@
 # export IASTAGENT_ANNOTATIONHANDLER_JSONFILE_ENABLED=true
 # export IASTAGENT_ANNOTATIONHANDLER_JSONFILE_PATHNAME=iastoutput.ndjson
 # export IASTAGENT_ANNOTATIONHANDLER_JSONFILE_LEVEL=info
-# export IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED=true
-# export IASTAGENT_REMOTE_ENDPOINT_HTTP_LOCATION=localhost
-# export IASTAGENT_REMOTE_ENDPOINT_HTTP_PORT=10010
+export IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED=true
+export IASTAGENT_REMOTE_ENDPOINT_HTTP_LOCATION=$1
+export IASTAGENT_REMOTE_ENDPOINT_HTTP_PORT=$2
 
 # The BUILD_TAG comes from the Jenkins environment, however you can enable the following line
 # if you want to run the script manually and mock a Jenkins build execution.
 # export BUILD_TAG=jenkins-agent-server-test-pipeline-9000
 
-echo Starting Node app...
-echo PATH=$PATH
-echo NODE_PATH=$NODE_PATH
-echo PWD=$(pwd)
-ls
-node -r /agent_nodejs_linux64 app/server.js
+node -r agent_nodejs_linux64 app/server.js
