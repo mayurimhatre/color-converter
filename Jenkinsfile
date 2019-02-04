@@ -7,6 +7,7 @@ pipeline {
     }
     environment {
         NODE_PATH = '/agent'
+        IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED = 'true'
     }
     stages {
         stage('Build') {
@@ -31,8 +32,8 @@ pipeline {
                 sh 'pwd'
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
                     // sh "forever start -e err.log -r agent_nodejs_linux64 app/server.js"
-                    sh "forever start -e err.log -c 'node -r agent_nodejs_linux64 app/server.js"
-                    //sh 'forever start -e err.log --killSignal SIGTERM --minUptime 1000 --spinSleepTime 1000 -c /bin/sh ./start.sh'
+                    sh "forever start -e err.log -c 'NODE_PATH=${NODE_PATH} node -r agent_nodejs_linux64' app/server.js"
+                    sleep(time:30,unit:"SECONDS")
                     sh 'cat err.log'
                     sh 'npm test'
                     sh 'forever stop 0'
