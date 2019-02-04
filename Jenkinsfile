@@ -30,6 +30,7 @@ pipeline {
                     }
                 }
                 sh 'pwd'
+                echo sh(returnStdout: true, script: 'env')
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
                     // sh "forever start -e err.log -r agent_nodejs_linux64 app/server.js"
                     sh 'forever list'
