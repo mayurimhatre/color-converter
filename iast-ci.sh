@@ -91,13 +91,13 @@ create_temp_folder() {
   trap cleanup EXIT INT
 }
 
-# Returns 0 if the latest version zip appears to be present; otherwise 1.
+# Returns 0 if the latest version of .tar.gz appears to be present; otherwise 1.
 check_and_set_latest_version() {
   debug "check_and_set_latest_version: checking latest version..."
   if curl -m30 -f -v -o "$FOLDER/version" https://s3.us-east-2.amazonaws.com/app.hailstone.io/LATEST_VERSION 2>"$FOLDER/curl-output"; then
     latest_version=$(cat "$FOLDER/version")
     debug "check_and_set_latest_version: retrieved LATEST_VERSION: $latest_version"
-    if [ ${NOCACHE} -eq 0 -a -e "${CACHE_DIR}/iast-${latest_version}-${PLATFORM}.zip" ]; then
+    if [ ${NOCACHE} -eq 0 -a -e "${CACHE_DIR}/iast-${latest_version}-${PLATFORM}.tar.gz" ]; then
       debug "check_and_set_latest_version: latest version already exists."
       return 0
     fi
@@ -114,15 +114,15 @@ check_and_set_latest_version() {
 }
 
 download_latest_version() {
-  local url="https://s3.us-east-2.amazonaws.com/app.hailstone.io/${latest_version}/$PLATFORM/agent.zip"
+  local url="https://s3.us-east-2.amazonaws.com/app.hailstone.io/${latest_version}/$PLATFORM/agent.tar.gz"
   debug "download_latest_version: retrieving iast ${latest_version} for ${OS}/${PLATFORM} via ${url}..."
   local t0=$(date +%s)
-  if curl -m 300 -f -v -o "$FOLDER/iast-${latest_version}-${PLATFORM}.zip" "${url}" 2>"$FOLDER/curl-output"; then
+  if curl -m 300 -f -v -o "$FOLDER/iast-${latest_version}-${PLATFORM}.tar.gz" "${url}" 2>"$FOLDER/curl-output"; then
     debug "download_latest_version: retrieved in $(( $(date +%s) - $t0 ))s."
     if [ ! -d "$CACHE_DIR" ]; then
       mkdir "$CACHE_DIR"
     fi
-    mv "$FOLDER/iast-${latest_version}-${PLATFORM}.zip" "${CACHE_DIR}"
+    mv "$FOLDER/iast-${latest_version}-${PLATFORM}.tar.gz" "${CACHE_DIR}"
   else
     debug "download_latest_version: retrieval failed: $?"
     echo "We were not able to download your installation package from ${url}." >&2
@@ -143,11 +143,11 @@ extract_latest_version() {
   fi
 
   # Check to make sure the archive exists.
-  if [ ! -e "${CACHE_DIR}/iast-${latest_version}-${PLATFORM}.zip" ]; then
-    echo "error: extract_latest_version expected \"${CACHE_DIR}/iast-${latest_version}-${PLATFORM}.zip\" to exist, but file is not found." >&2
+  if [ ! -e "${CACHE_DIR}/iast-${latest_version}-${PLATFORM}.tar.gz" ]; then
+    echo "error: extract_latest_version expected \"${CACHE_DIR}/iast-${latest_version}-${PLATFORM}.tar.gz\" to exist, but file is not found." >&2
     exit 1
   else
-    debug "extract_latest_version: archive \"${CACHE_DIR}/iast-${latest_version}-${PLATFORM}.zip\" found"
+    debug "extract_latest_version: archive \"${CACHE_DIR}/iast-${latest_version}-${PLATFORM}.tar.gz\" found"
   fi
 
   rm -rf "${CACHE_DIR}/iast" || true
@@ -161,7 +161,7 @@ extract_latest_version() {
 
   debug "extract_latest_version: extracting iast..."
   local t0=$(date +%s)
-  if tar -xzvf "${CACHE_DIR}/iast-${latest_version}-${PLATFORM}.zip" -C "${CACHE_DIR}/iast"; then
+  if tar -xzvf "${CACHE_DIR}/iast-${latest_version}-${PLATFORM}.tar.gz" -C "${CACHE_DIR}/iast"; then
     debug "extract_latest_version: extraction complete in $(( $(date +%s) - $t0 ))s."
     cp -ar "${CACHE_DIR}/iast/." .
   else
