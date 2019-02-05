@@ -7,7 +7,12 @@
 # Use this to specify where the Hailstone Agent to attach is located.
 # export NODE_PATH=~/vscode/hailstone/iast-dev/out/agent/nodejs
 
-echo ${NODE_PATH}
+if [ ! -d "${NODE_PATH}" ]; then
+  echo "ERROR: ${NODE_PATH} not found!"
+else
+  echo "${NODE_PATH} found."
+fi
+
 if [ ! -f ${NODE_PATH}/agent_nodejs_linux64.node ]; then
   echo "ERROR: ${NODE_PATH}/agent_nodejs_linux64.node not found!"
 else
