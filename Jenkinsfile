@@ -6,7 +6,7 @@ pipeline {
         }
     }
     environment {
-        NODE_PATH = '~/agents/linux64'
+        NODE_PATH = '/srv/iast-agent/'
     }
     stages {
         stage('Build') {
