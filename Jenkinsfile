@@ -30,11 +30,11 @@ pipeline {
                     }
                 }
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
-                    sh "forever start -l color-converter-log.log -o color-convertor-out.log -e color-convertor-error.log -c 'node -r agent_nodejs_linux64' app/server.js"
+                    sh "forever start -l color-converter-log.log -o color-converter-out.log -e color-converter-error.log -c 'node -r agent_nodejs_linux64' app/server.js"
                     sleep(time:30,unit:"SECONDS")
-                    sh 'cat color-convertor-log.log'
-                    sh 'cat color-convertor-out.log'
-                    sh 'cat color-convertor-error.log'
+                    // sh 'cat color-converter-log.log'
+                    // sh 'cat color-converter-out.log'
+                    // sh 'cat color-converter-error.log'
                     sh 'forever list'
                     sh 'npm test'
                     sh 'forever stop 0'
