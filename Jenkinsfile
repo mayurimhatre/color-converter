@@ -6,8 +6,7 @@ pipeline {
         }
     }
     environment {
-        NODE_PATH = '/Test'
-        IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED = 'true'
+        NODE_PATH = '~/agents/linux64'
     }
     stages {
         stage('Build') {
@@ -19,23 +18,24 @@ pipeline {
         stage('Test'){
             steps {
                 // echo sh(returnStdout: true, script: 'env')
+                // sh 'pwd'
                 script {
                     def agentPath = "${NODE_PATH}/agent_nodejs_linux64.node"
                     dir("${NODE_PATH}") {
                         if (fileExists("agent_nodejs_linux64.node")) {
-                        echo "Using Agent: ${agentPath}"
+                            echo "Using Agent: ${agentPath}"
                         } else {
-                        echo "ERROR: Agent cannot be found at: ${agentPath}"
+                            echo "ERROR: Agent cannot be found at: ${agentPath}"
                         }
                     }
                 }
-                sh 'pwd'
-                echo sh(returnStdout: true, script: 'env')
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
-                    // sh "forever start -e err.log -r agent_nodejs_linux64 app/server.js"
-                    sh "forever start -e err.log -c 'node -r Test/agent_nodejs_linux64' app/server.js"
-                    sh 'cat err.log'
-                     sh 'forever list'
+                    sh "forever start -l color-converter-log.log -o color-convertor-out.log -e color-convertor-error.log -c 'node -r agent_nodejs_linux64' app/server.js"
+                    sleep(time:30,unit:"SECONDS")
+                    sh 'cat color-convertor-log.log'
+                    sh 'cat color-convertor-out.log'
+                    sh 'cat color-convertor-error.log'
+                    sh 'forever list'
                     sh 'npm test'
                     sh 'forever stop 0'
                 }
