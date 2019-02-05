@@ -7,6 +7,13 @@ pipeline {
     }
     environment {
         NODE_PATH = '/srv/iast-agent'
+        IASTAGENT_LOGGING_STDERR_LEVEL = 'debug'
+        IASTAGENT_LOGGING_FILE_ENABLED = 'true'
+        IASTAGENT_LOGGING_FILE_PATHNAME = 'iastdebug.txt'
+        IASTAGENT_LOGGING_FILE_LEVEL = 'debug'
+        IASTAGENT_ANNOTATIONHANDLER_JSONFILE_ENABLED = 'true'
+        IASTAGENT_ANNOTATIONHANDLER_JSONFILE_PATHNAME = 'iastoutput.ndjson'
+        IASTAGENT_ANNOTATIONHANDLER_JSONFILE_LEVEL = 'info'
     }
     stages {
         stage('Build') {
@@ -30,8 +37,7 @@ pipeline {
                     }
                 }
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
-                    //*** sh "forever start -l ${BUILD_TAG}.log -o ${BUILD_TAG}-out.log -e ${BUILD_TAG}-err.log -c 'node -r agent_nodejs_linux64' app/server.js"
-                    sh "forever start -l ${BUILD_TAG}.log -o ${BUILD_TAG}-out.log -e ${BUILD_TAG}-err.log --killSignal SIGTERM --minUptime 1000 --spinSleepTime 1000 -c /bin/sh ./start.sh localhost 10010"
+                    sh "forever start -l ${BUILD_TAG}.log -o ${BUILD_TAG}-out.log -e ${BUILD_TAG}-err.log -c 'node -r srv/iast-agent/agent_nodejs_linux64' app/server.js"
                     sleep(time:30,unit:"SECONDS")
                     script {
                         if (fileExists("${BUILD_TAG}.log")) {
