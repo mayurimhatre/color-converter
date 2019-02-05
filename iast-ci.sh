@@ -163,10 +163,19 @@ extract_latest_version() {
   local t0=$(date +%s)
   if unzip -o "${CACHE_DIR}/iast-${latest_version}-${PLATFORM}.zip" -d "${CACHE_DIR}/iast"; then
     debug "extract_latest_version: extraction complete in $(( $(date +%s) - $t0 ))s."
-    export NODE_HOME="${CACHE_DIR}/iast"
+    cp -ar "${CACHE_DIR}/iast/." .
   else
     debug "extract_latest_version: extraction failed: $?"
     echo "error: extract_latest_version: tar reported errors while extracting the iast package." >&2
+    exit 1
+  fi
+
+  debug "extract_latest_version: copying iast to current folder..."
+  if cp -ar "${CACHE_DIR}/iast/." .; then
+    debug "extract_latest_version: copied to current."
+  else
+    debug "extract_latest_version: copy to current failed: $?"
+    echo "error: extract_latest_version: cp reported errors while copying the iast artifacts." >&2
     exit 1
   fi
 }
