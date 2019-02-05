@@ -30,9 +30,8 @@ pipeline {
                     }
                 }
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
-                    sh "NODE_PATH=/srv/iast-agent forever start -e color-converter-error.log -c 'node -r agent_nodejs_linux64' app/server.js"
+                    sh "NODE_PATH=/srv/iast-agent forever start -c 'node -r agent_nodejs_linux64' app/server.js"
                     sleep(time:30,unit:"SECONDS")
-                    sh 'cat color-converter-error.log'
                     sh 'forever list'
                     sh 'npm test'
                     sh 'forever stop 0'
