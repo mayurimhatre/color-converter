@@ -34,7 +34,7 @@ pipeline {
                     sleep(time:30,unit:"SECONDS")
                     // sh 'cat color-converter-log.log'
                     // sh 'cat color-converter-out.log'
-                    // sh 'cat color-converter-error.log'
+                    sh 'cat color-converter-error.log'
                     sh 'forever list'
                     sh 'npm test'
                     sh 'forever stop 0'
