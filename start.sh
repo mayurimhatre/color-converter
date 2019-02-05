@@ -32,4 +32,4 @@ export IASTAGENT_REMOTE_ENDPOINT_HTTP_PORT=$2
 # if you want to run the script manually and mock a Jenkins build execution.
 # export BUILD_TAG=jenkins-agent-server-test-pipeline-9000
 
-node -r agent_nodejs_linux64 app/server.js
+node -r srv/iast-agent/agent_nodejs_linux64 app/server.js
