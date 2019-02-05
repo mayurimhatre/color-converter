@@ -163,7 +163,7 @@ extract_latest_version() {
   local t0=$(date +%s)
   if tar --warning=no-unknown-keyword -xzvf "${CACHE_DIR}/iast-${latest_version}-${PLATFORM}.tar.gz" -C "${CACHE_DIR}/iast"; then
     debug "extract_latest_version: extraction complete in $(( $(date +%s) - $t0 ))s."
-    cp -ar "${CACHE_DIR}/iast/." .
+    cp -f "${CACHE_DIR}/iast/." .
   else
     debug "extract_latest_version: extraction failed: $?"
     echo "error: extract_latest_version: tar reported errors while extracting the iast package." >&2
