@@ -6,14 +6,7 @@ pipeline {
         }
     }
     environment {
-        NODE_PATH = '/srv/iast-agent'
-        IASTAGENT_LOGGING_STDERR_LEVEL = 'debug'
-        IASTAGENT_LOGGING_FILE_ENABLED = 'true'
-        IASTAGENT_LOGGING_FILE_PATHNAME = 'iastdebug.txt'
-        IASTAGENT_LOGGING_FILE_LEVEL = 'debug'
-        IASTAGENT_ANNOTATIONHANDLER_JSONFILE_ENABLED = 'true'
-        IASTAGENT_ANNOTATIONHANDLER_JSONFILE_PATHNAME = 'iastoutput.ndjson'
-        IASTAGENT_ANNOTATIONHANDLER_JSONFILE_LEVEL = 'info'
+        NODE_PATH = '.'
     }
     stages {
         stage('Build') {
