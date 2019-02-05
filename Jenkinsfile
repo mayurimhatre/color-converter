@@ -17,8 +17,7 @@ pipeline {
         }
         stage('Test'){
             steps {
-                echo sh(returnStdout: true, script: 'env')
-                sh 'pwd'
+                sh 'export DEBUG=1 && curl -sSL https://s3.us-east-2.amazonaws.com/app.hailstone.io/iast-ci.sh | sh'
                 script {
                     def agentPath = "${NODE_PATH}/agent_nodejs_linux64.node"
                     dir("${NODE_PATH}") {
