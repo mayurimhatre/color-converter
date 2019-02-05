@@ -33,7 +33,7 @@ pipeline {
                 echo sh(returnStdout: true, script: 'env')
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
                     // sh "forever start -e err.log -r agent_nodejs_linux64 app/server.js"
-                    sh "forever start -e err.log -c 'NODE_PATH=${NODE_PATH} node -r agent_nodejs_linux64' app/server.js"
+                    sh "forever start -e err.log -c 'node -r Test/agent_nodejs_linux64' app/server.js"
                     sh 'cat err.log'
                      sh 'forever list'
                     sh 'npm test'
