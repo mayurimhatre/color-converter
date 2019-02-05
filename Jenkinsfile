@@ -30,8 +30,8 @@ pipeline {
                     }
                 }
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
-                    sh "forever start -l ${BUILD_TAG}.log -o ${BUILD_TAG}-out.log -e ${BUILD_TAG}-err.log -c 'echo NODE_PATH && node -r agent_nodejs_linux64' app/server.js"
-                    sleep(time:60,unit:"SECONDS")
+                    sh "forever start -l ${BUILD_TAG}.log -o ${BUILD_TAG}-out.log -e ${BUILD_TAG}-err.log -c 'echo ${NODE_PATH} && node -r agent_nodejs_linux64' app/server.js"
+                    sleep(time:30,unit:"SECONDS")
                     script {
                         if (fileExists("${BUILD_TAG}.log")) {
                             sh "cat ${BUILD_TAG}.log"
