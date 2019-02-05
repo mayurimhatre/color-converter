@@ -17,8 +17,8 @@ pipeline {
         }
         stage('Test'){
             steps {
-                // echo sh(returnStdout: true, script: 'env')
-                // sh 'pwd'
+                echo sh(returnStdout: true, script: 'env')
+                sh 'pwd'
                 script {
                     def agentPath = "${NODE_PATH}/agent_nodejs_linux64.node"
                     dir("${NODE_PATH}") {
@@ -30,7 +30,7 @@ pipeline {
                     }
                 }
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
-                    sh "NODE_PATH=/srv/iast-agent forever start -f -c 'node -r agent_nodejs_linux64' app/server.js"
+                    sh "NODE_PATH=/srv/iast-agent forever start -c 'node -r agent_nodejs_linux64' app/server.js"
                     sleep(time:30,unit:"SECONDS")
                     sh 'forever list'
                     sh 'npm test'
