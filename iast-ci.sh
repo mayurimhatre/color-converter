@@ -91,13 +91,13 @@ create_temp_folder() {
   trap cleanup EXIT INT
 }
 
-# Returns 0 if the latest version tgz appears to be present; otherwise 1.
+# Returns 0 if the latest version zip appears to be present; otherwise 1.
 check_and_set_latest_version() {
   debug "check_and_set_latest_version: checking latest version..."
   if curl -m30 -f -v -o "$FOLDER/version" https://s3.us-east-2.amazonaws.com/app.hailstone.io/LATEST_VERSION 2>"$FOLDER/curl-output"; then
     latest_version=$(cat "$FOLDER/version")
     debug "check_and_set_latest_version: retrieved LATEST_VERSION: $latest_version"
-    if [ ${NOCACHE} -eq 0 -a -e "${CACHE_DIR}/iast-${latest_version}-${PLATFORM}.tgz" ]; then
+    if [ ${NOCACHE} -eq 0 -a -e "${CACHE_DIR}/iast-${latest_version}-${PLATFORM}.zip" ]; then
       debug "check_and_set_latest_version: latest version already exists."
       return 0
     fi
