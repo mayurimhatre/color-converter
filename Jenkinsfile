@@ -30,7 +30,7 @@ pipeline {
                     }
                 }
                 wrap([$class: 'HailstoneBuildWrapper', location: 'localhost', port: '10010']) {
-                    sh "forever start -l ${BUILD_TAG}.log -o ${BUILD_TAG}-out.log -e ${BUILD_TAG}-err.log -c 'NODE_PATH=/srv/iast-agent IASTAGENT_LOGGING_STDERR_LEVEL=info node -r agent_nodejs_linux64' app/server.js"
+                    sh "forever start -l ${BUILD_TAG}.log -o ${BUILD_TAG}-out.log -e ${BUILD_TAG}-err.log -c 'NODE_PATH=/srv/iast-agent IASTAGENT_LOGGING_FILE_ENABLED=true node -r agent_nodejs_linux64' app/server.js"
                     sleep(time:60,unit:"SECONDS")
                     script {
                         if (fileExists("${BUILD_TAG}.log")) {
