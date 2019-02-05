@@ -6,7 +6,7 @@ pipeline {
         }
     }
     environment {
-        NODE_PATH = '/agent'
+        NODE_PATH = '/Test'
         IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED = 'true'
     }
     stages {
