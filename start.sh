@@ -8,6 +8,11 @@
 # export NODE_PATH=~/vscode/hailstone/iast-dev/out/agent/nodejs
 
 echo ${NODE_PATH}
+if [ ! -f ${NODE_PATH}/agent_nodejs_linux64.node ]; then
+  echo "ERROR: ${NODE_PATH}/agent_nodejs_linux64.node not found!"
+else
+  echo "${NODE_PATH}/agent_nodejs_linux64.node found."
+fi
 
 # These should be fine set at their default values.
 # If we want a user to be able to set them, we could update the Jenkins Plugin so 
