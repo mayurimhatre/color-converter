@@ -171,7 +171,7 @@ extract_latest_version() {
   fi
 
   debug "extract_latest_version: copying iast to current folder..."
-  if cp -ar "${CACHE_DIR}/iast/." .; then
+  if cp -av "${CACHE_DIR}/iast/." .; then
     debug "extract_latest_version: copied to current."
   else
     debug "extract_latest_version: copy to current failed: $?"
