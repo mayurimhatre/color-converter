@@ -14,4 +14,4 @@ export IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED=true
 export IASTAGENT_REMOTE_ENDPOINT_HTTP_LOCATION=$1
 export IASTAGENT_REMOTE_ENDPOINT_HTTP_PORT=$2
 
-node -r agent_nodejs_linux64 app/server.js
+node -r ./agent_nodejs_linux64 app/server.js
