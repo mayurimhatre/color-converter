@@ -5,7 +5,7 @@ pipeline {
             args '-u 0:0'
         }
     }
-    enviroment {
+    environment {
         IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED="true"
         IASTAGENT_REMOTE_ENDPOINT_HTTP_LOCATION="localhost"
         IASTAGENT_REMOTE_ENDPOINT_HTTP_PORT="10010"
