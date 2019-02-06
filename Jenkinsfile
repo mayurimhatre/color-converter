@@ -5,6 +5,9 @@ pipeline {
             args '-u 0:0'
         }
     }
+    environment {
+        NODE_PATH = '.'
+    }
     stages {
         stage('Build') {
             steps {
