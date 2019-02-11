@@ -20,8 +20,8 @@ pipeline {
                     echo "IASTAGENT_REMOTE_ENDPOINT_HTTP_PORT=${env.IASTAGENT_REMOTE_ENDPOINT_HTTP_PORT}"
                     sh 'export DEBUG=1 && curl -sSL https://s3.us-east-2.amazonaws.com/app.hailstone.io/iast-ci.sh | sh'
                     echo sh(returnStdout: true, script: 'env')
-                    // sh "forever start -l ${BUILD_TAG}.log -o ${BUILD_TAG}-out.log -e ${BUILD_TAG}-err.log --killSignal SIGTERM --minUptime 1000 --spinSleepTime 1000 -c 'node -r ./agent_nodejs_linux64' app/server.js"
-                    sh "forever start -l ${BUILD_TAG}.log -o ${BUILD_TAG}-out.log -e ${BUILD_TAG}-err.log --killSignal SIGTERM --minUptime 1000 --spinSleepTime 1000 -c /bin/sh ./start.sh"
+                    sh "forever start -l ${BUILD_TAG}.log -o ${BUILD_TAG}-out.log -e ${BUILD_TAG}-err.log --killSignal SIGTERM --minUptime 1000 --spinSleepTime 1000 -c 'node -r ./agent_nodejs_linux64' app/server.js"
+                    // sh "forever start -l ${BUILD_TAG}.log -o ${BUILD_TAG}-out.log -e ${BUILD_TAG}-err.log --killSignal SIGTERM --minUptime 1000 --spinSleepTime 1000 -c /bin/sh ./start.sh"
                     sleep(time:30,unit:"SECONDS")
                     sh 'npm test'
                     sh 'forever stop 0'
